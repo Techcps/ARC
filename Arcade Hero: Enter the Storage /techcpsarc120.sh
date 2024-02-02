@@ -1,2 +1,2 @@
 
-gsutil mb -l region=$REGION gs://$BUCKET_NAME/
+gsutil mb -l $REGION gs://$BUCKET_NAME
