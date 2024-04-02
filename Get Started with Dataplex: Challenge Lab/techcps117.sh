@@ -1,6 +1,3 @@
-
-gcloud services enable datacatalog.googleapis.com --project=$DEVSHELL_PROJECT_ID
-
 gcloud services enable dataplex.googleapis.com --project=$DEVSHELL_PROJECT_ID
 
 gcloud dataplex lakes create customer-engagements --location=$REGION --display-name="Customer Engagements"
