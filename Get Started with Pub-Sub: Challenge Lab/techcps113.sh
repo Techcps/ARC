@@ -2,7 +2,7 @@
 read -p "Enter the Form number (1, 2, or 3): " form_number
 
 # Function to run Form 1
-run_form_1() {
+cp_form_1() {
     gcloud services enable cloudscheduler.googleapis.com --project=$DEVSHELL_PROJECT_ID
 
     gcloud pubsub topics create cloud-pubsub-topic
@@ -15,7 +15,7 @@ run_form_1() {
 }
 
 # Function to run Form 2
-run_form_2() {
+cp_form_2() {
     gcloud beta pubsub schemas create city-temp-schema \
         --type=avro \
         --definition='{
@@ -45,7 +45,7 @@ run_form_2() {
 }
 
 # Function to run Form 3
-run_form_3() {
+cp_form_3() {
     gcloud pubsub snapshots create pubsub-snapshot --subscription=gcloud-pubsub-subscription
 
     gcloud pubsub lite-reservations create pubsub-lite-reservation --location=$REGION --throughput-capacity=2
@@ -60,11 +60,11 @@ run_form_3() {
 # Run the function based on the selected form number
 case $form_number in
     1) 
-        run_form_1 || run_form_2 ;;
+        cp_form_1 || cp_form_2 ;;
     2) 
-        run_form_2 || run_form_3 ;;
+        cp_form_2 || cp_form_3 ;;
     3) 
-        run_form_3 ;;
+        cp_form_3 ;;
     *) 
         echo "CP Invalid form number. Please enter 1, 2, or 3." ;;
 esac
