@@ -49,9 +49,9 @@ gsutil defstorageclass set ARCHIVE gs://$BUCKET-bucket-ops
 # Run the function based on the selected form number
 case $form_number in
     1) 
-        cp_form_1 || run_form_2 ;;
+        cp_form_1 || cp_form_2 ;;
     2) 
-        cp_form_2 || run_form_3 ;;
+        cp_form_2 || cp_form_3 ;;
     3) 
         cp_form_3 ;;
     *) 
