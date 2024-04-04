@@ -1,16 +1,10 @@
 
-# ARC109
-
-export REGION=us-central1
-
-
 gcloud services enable apigateway.googleapis.com --project=$DEVSHELL_PROJECT_ID
-
 
 mkdir techcps
 cd techcps
 
-cat > index.js <<EOF_CP
+cat > index.js <<EOF
 /**
  * Responds to any HTTP request.
  *
@@ -21,15 +15,16 @@ exports.helloWorld = (req, res) => {
   let message = req.query.message || req.body.message || 'Hello World!';
   res.status(200).send(message);
 };
-EOF_CP
+EOF
 
-cat > package.json <<EOF_CP
+cat > package.json <<EOF
 {
   "name": "sample-http",
   "version": "0.0.1"
 }
-EOF_CP
+EOF
 
+sleep 15
 
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="json(projectNumber)" --quiet | jq -r '.projectNumber')
 
@@ -47,11 +42,11 @@ else
   echo "IAM binding created: $SERVICE_ACCOUNT with role roles/artifactregistry.reader"
 fi
 
-gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs18 --trigger-http --gen2 --allow-unauthenticated --entry-point=helloWorld --max-instances 5 --source=./
+gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs20 --trigger-http --gen2 --allow-unauthenticated --entry-point=helloWorld --max-instances 5 --source=./
 
 gcloud pubsub topics create demo-topic
 
-cat > index.js <<EOF_CP
+cat > index.js <<EOF
 /**
  * Responds to any HTTP request.
  *
@@ -67,9 +62,9 @@ exports.helloWorld = (req, res) => {
   topic.publishMessage({data: Buffer.from('Hello from Cloud Functions!')});
   res.status(200).send("Message sent to Topic demo-topic!");
 };
-EOF_CP
+EOF
 
-cat > package.json <<EOF_CP
+cat > package.json <<EOF
 {
   "name": "sample-http",
   "version": "0.0.1",
@@ -77,11 +72,11 @@ cat > package.json <<EOF_CP
     "@google-cloud/pubsub": "^3.4.1"
   }
 }
-EOF_CP
+EOF
 
-gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs18 --trigger-http --allow-unauthenticated --entry-point=helloWorld --max-instances 5 --source=./
+gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs20 --trigger-http --gen2 --allow-unauthenticated --entry-point=helloWorld --max-instances 5 --source=./
 
-cat > openapispec.yaml <<EOF_CP
+cat > openapispec.yaml <<EOF
 swagger: '2.0'
 info:
   title: GCFunction API
@@ -103,7 +98,7 @@ paths:
           description: A successful response
           schema:
             type: string
-EOF_CP
+EOF
 
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
 
@@ -114,4 +109,3 @@ gcloud api-gateway apis create $API_ID --project=$DEVSHELL_PROJECT_ID
 gcloud api-gateway api-configs create gcfunction-api --api=$API_ID --openapi-spec=openapispec.yaml --project=$DEVSHELL_PROJECT_ID --backend-auth-service-account=$PROJECT_NUMBER-compute@developer.gserviceaccount.com
 
 gcloud api-gateway gateways create gcfunction-api --api=$API_ID --api-config=gcfunction-api --location=$REGION --project=$DEVSHELL_PROJECT_ID
-
