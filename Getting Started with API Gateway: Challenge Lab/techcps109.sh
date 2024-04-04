@@ -1,6 +1,8 @@
 
 gcloud services enable apigateway.googleapis.com --project=$DEVSHELL_PROJECT_ID
 
+sleep 15
+
 mkdir techcps
 cd techcps
 
@@ -24,7 +26,7 @@ cat > package.json <<EOF
 }
 EOF
 
-sleep 15
+sleep 45
 
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="json(projectNumber)" --quiet | jq -r '.projectNumber')
 
@@ -46,7 +48,7 @@ gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs20 --trigger
 
 gcloud pubsub topics create demo-topic
 
-cat > index.js <<EOF
+cat > index.js <<EOF_CP
 /**
  * Responds to any HTTP request.
  *
@@ -62,9 +64,9 @@ exports.helloWorld = (req, res) => {
   topic.publishMessage({data: Buffer.from('Hello from Cloud Functions!')});
   res.status(200).send("Message sent to Topic demo-topic!");
 };
-EOF
+EOF_CP
 
-cat > package.json <<EOF
+cat > package.json <<EOF_CP
 {
   "name": "sample-http",
   "version": "0.0.1",
@@ -72,11 +74,11 @@ cat > package.json <<EOF
     "@google-cloud/pubsub": "^3.4.1"
   }
 }
-EOF
+EOF_CP
 
 gcloud functions deploy GCFunction --region=$REGION --runtime=nodejs20 --trigger-http --gen2 --allow-unauthenticated --entry-point=helloWorld --max-instances 5 --source=./
 
-cat > openapispec.yaml <<EOF
+cat > openapispec.yaml <<EOF_CP
 swagger: '2.0'
 info:
   title: GCFunction API
@@ -98,7 +100,7 @@ paths:
           description: A successful response
           schema:
             type: string
-EOF
+EOF_CP
 
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
 
