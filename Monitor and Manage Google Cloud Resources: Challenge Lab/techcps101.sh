@@ -102,15 +102,15 @@ cat > package.json <<EOF_CP
   }
 EOF_CP
 
-export PROJECT_NUMBER=$(gcloud config get-value project $DEVSHELL_PROJECT_ID --format="value(projectNumber)" --quiet)
-
+export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
 SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
+
 
 #!/bin/bash
 
 while true; do
-    export PROJECT_NUMBER=$(gcloud config get-value project $DEVSHELL_PROJECT_ID --format="value(projectNumber)" --quiet)
-    SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
+    export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
+    SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER) 
     gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role roles/artifactregistry.reader
 
     if [ $? -eq 0 ]; then
