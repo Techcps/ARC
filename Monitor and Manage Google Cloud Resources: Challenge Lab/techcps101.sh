@@ -26,7 +26,7 @@ exports.thumbnail = (event, context) => {
   const bucketName = event.bucket;
   const size = "64x64"
   const bucket = gcs.bucket(bucketName);
-  const topicName = "REPLACE_WITH_YOUR_TOPIC ID";
+  const topicName = "$TOPIC";
   const pubsub = new PubSub();
   if ( fileName.search("64x64_thumbnail") == -1 ){
     // doesn't have a thumbnail, get the filename extension
@@ -79,7 +79,7 @@ exports.thumbnail = (event, context) => {
 };
 EOF_CP
 
-sed -i "16c\  const topicName = '$TOPIC_NAME';" index.js
+sed -i "16c\  const topicName = '$TOPIC';" index.js
 
 cat > package.json <<EOF_CP
 {
