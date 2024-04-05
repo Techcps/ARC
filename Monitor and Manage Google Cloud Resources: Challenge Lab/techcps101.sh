@@ -105,10 +105,23 @@ SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
 
 gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role roles/artifactregistry.reader
 
-sleep 17
+sleep 45
 
-gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs14 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.\
+#!/bin/bash
 
+# Loop until the function deployment succeeds
+while true; do
+    gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs14 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.
+
+    # Check the exit status of the last command
+    if [ $? -eq 0 ]; then
+        echo "Deployment successful, subscribe to techcps"
+        break
+    else
+        echo "Deployment failed. Retrying..."
+        sleep 17
+    fi
+done
 
 curl -LO raw.githubusercontent.com/Techcps/ARC/master/Monitor%20and%20Manage%20Google%20Cloud%20Resources%3A%20Challenge%20Lab/travel.jpg
 
