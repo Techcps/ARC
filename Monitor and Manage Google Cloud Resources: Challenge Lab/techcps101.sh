@@ -10,7 +10,7 @@ gcloud pubsub topics create $TOPIC
 mkdir techcps
 cd techcps
 
-cat > index.js <<EOF_CP
+cat > index.js <<'EOF_CP'
 /* globals exports, require */
 //jshint strict: false
 //jshint esversion: 6
@@ -79,9 +79,7 @@ exports.thumbnail = (event, context) => {
 };
 EOF_CP
 
-sed -i "16c\  const topicName = '$TOPIC';" index.js
-
-cat > package.json <<EOF_CP
+cat > package.json <<'EOF_CP'
 {
     "name": "thumbnails",
     "version": "1.0.0",
@@ -105,25 +103,11 @@ EOF_CP
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
 SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
 
+gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role roles/artifactregistry.reader
 
-#!/bin/bash
+sleep 17
 
-while true; do
-    export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
-    SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER) 
-    gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAccount:$SERVICE_ACCOUNT --role roles/artifactregistry.reader
-
-    if [ $? -eq 0 ]; then
-        echo "Commands executed successfully."
-        break
-    else
-        echo "Commands failed. Retrying..."
-        sleep 15  # Wait for 15 seconds before retrying
-    fi
-done
-
-
-gcloud functions deploy $FUNCTION_NAME --runtime=nodejs14 --region=$REGION --entry-point=thumbnail --trigger-bucket $BUCKET --source=./
+gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs14 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.\
 
 
 curl -LO raw.githubusercontent.com/Techcps/ARC/master/Monitor%20and%20Manage%20Google%20Cloud%20Resources%3A%20Challenge%20Lab/travel.jpg
@@ -165,5 +149,6 @@ cat > app-engine-error-percent-policy.json <<EOF_CP
     "severity": "SEVERITY_UNSPECIFIED"
   }
 EOF_CP
+
 
 gcloud alpha monitoring policies create --policy-from-file="app-engine-error-percent-policy.json"
