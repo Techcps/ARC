@@ -7,6 +7,9 @@ gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=user:$USER 
 gcloud pubsub topics create $TOPIC
 
 
+mkdir techcps
+cd techcps
+
 cat > index.js <<EOF_CP
 /* globals exports, require */
 //jshint strict: false
@@ -23,7 +26,7 @@ exports.thumbnail = (event, context) => {
   const bucketName = event.bucket;
   const size = "64x64"
   const bucket = gcs.bucket(bucketName);
-  const topicName = "$TOPIC";
+  const topicName = "REPLACE_WITH_YOUR_TOPIC ID";
   const pubsub = new PubSub();
   if ( fileName.search("64x64_thumbnail") == -1 ){
     // doesn't have a thumbnail, get the filename extension
@@ -76,7 +79,9 @@ exports.thumbnail = (event, context) => {
 };
 EOF_CP
 
-cat > package.json <<'EOF_END'
+sed -i "16c\  const topicName = '$TOPIC_NAME';" index.js
+
+cat > package.json <<EOF_CP
 {
     "name": "thumbnails",
     "version": "1.0.0",
