@@ -2,7 +2,7 @@
 
 gsutil mb gs://$BUCKET_NAME
 
-gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=user:$USER --role=roles/storage.objectViewer
+gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=user:$USER2 --role=roles/storage.objectViewer
 
 gcloud pubsub topics create $TOPIC
 
