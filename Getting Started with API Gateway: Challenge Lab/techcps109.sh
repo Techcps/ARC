@@ -30,7 +30,7 @@ sleep 45
 
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="json(projectNumber)" --quiet | jq -r '.projectNumber')
 
-SERVICE_ACCOUNT="service-$PROJECT_NUMBER@gcf-admin-robot.iam.gserviceaccount.com"
+SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
 
 IAM_POLICY=$(gcloud projects get-iam-policy $DEVSHELL_PROJECT_ID --format=json)
 
