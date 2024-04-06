@@ -12,7 +12,7 @@
 ```
 =IF(fare_amount>0,tip_amount/fare_amount*100,0)
 ```
-```
+
 ## Congratulations, you're all done with the lab 😄
 
 # Thanks for watching :)
