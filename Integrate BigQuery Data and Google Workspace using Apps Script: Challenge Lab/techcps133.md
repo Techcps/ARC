@@ -12,6 +12,4 @@
 =COUNTIF(taxi_trips!fare,">0")
 ```
 
-## Congratulations, you're all done with the lab 😄
-
 # Thanks for watching :)
