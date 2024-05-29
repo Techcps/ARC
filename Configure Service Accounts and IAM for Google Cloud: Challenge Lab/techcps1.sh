@@ -1,5 +1,10 @@
 
 
+SA=$(gcloud iam service-accounts list --format="value(email)" --filter "displayName=devops")
+
+echo $SA
+
+
 gcloud compute instances create vm-2 --service-account=$SA --zone=$ZONE
 
 
