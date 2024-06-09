@@ -8,27 +8,27 @@
 ```
 API_KEY=""
 
-file_CP2=""
+export ZONE=
 
-request_CP2=""
+file_cp2=""
 
-response_CP3=""
+request_cp3=""
 
-sentence_CP4=""
+response_cp3=""
 
-file_CP4=""
+sentence_cp4=""
 
-sentence_CP5=""
+file_cp4=""
 
-file_CP5=""
+sentence_cp5=""
+
+file_cp5=""
 ```
 
 ## 
 
 ```
-curl -LO raw.githubusercontent.com/Techcps/ARC/master/Cloud%20Speech%20API%203%20Ways%3A%20Challenge%20Lab/techcps.sh
-sudo chmod +x techcps.sh
-./techcps.sh
+gcloud compute ssh lab-vm --zone=$ZONE --project=$DEVSHELL_PROJECT_ID --quiet --command="curl -LO raw.githubusercontent.com/Techcps/ARC/master/Cloud%20Speech%20API%203%20Ways%3A%20Challenge%20Lab/techcps.sh && sudo chmod +x techcps.sh && ./techcps.sh"
 ```
 
 ## Congratulations, you're all done with the lab 😄
