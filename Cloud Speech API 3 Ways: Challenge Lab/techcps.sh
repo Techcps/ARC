@@ -1,12 +1,13 @@
 # ARC132!
 
 
+
 export PROJECT_ID=$(gcloud config get-value project)
 
 source venv/bin/activate
 
 
-cat > synthesize-text.json <<EOF_CP
+cat > synthesize-text.json <<EOF
 
 {
     'input':{
@@ -26,17 +27,17 @@ cat > synthesize-text.json <<EOF_CP
     }
 }
 
-EOF_CP
+EOF
 
 
 curl -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
   -H "Content-Type: application/json; charset=utf-8" \
   -d @synthesize-text.json "https://texttospeech.googleapis.com/v1/text:synthesize" \
-  > $file_CP2
+  > $file_cp2
 
 
 
-cat > tts_decode.py <<EOF_CP
+cat > tts_decode.py <<EOF
 import argparse
 from base64 import decodebytes
 import json
@@ -67,9 +68,9 @@ if __name__ == '__main__':
                        required=True)
     args = parser.parse_args()
     decode_tts_output(args.input, args.output)
-EOF_CP
+EOF
 
-python tts_decode.py --input "$request_CP2" --output "synthesize-text-audio.mp3"
+python tts_decode.py --input "$file_cp2" --output "synthesize-text-audio.mp3"
 
 
 
@@ -78,8 +79,7 @@ python tts_decode.py --input "$request_CP2" --output "synthesize-text-audio.mp3"
 audio_uri="gs://cloud-samples-data/speech/corbeau_renard.flac"
 
 
-
-cat > "$request_CP2" <<EOF_CP
+cat > "$request_cp3" <<EOF
 {
   "config": {
     "encoding": "FLAC",
@@ -90,25 +90,24 @@ cat > "$request_CP2" <<EOF_CP
     "uri": "$audio_uri"
   }
 }
-EOF_CP
+EOF
 
 
 curl -s -X POST -H "Content-Type: application/json" \
-    --data-binary @"$request_CP2" \
+    --data-binary @"$request_cp3" \
     "https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" \
-    -o "$response_CP3"
+    -o "$response_cp3"
 
 
 
 sudo apt-get update
 sudo apt-get install -y jq
 
-
-curl "https://translation.googleapis.com/language/translate/v2?target=en&key=${API_KEY}&q=${sentence_CP4}" > $file_CP4
-
+curl "https://translation.googleapis.com/language/translate/v2?target=en&key=${API_KEY}&q=${sentence_cp4}" > $file_cp4
 
 
-decoded_sentence=$(python -c "import urllib.parse; print(urllib.parse.unquote('$sentence_CP5'))")
+
+decoded_sentence=$(python -c "import urllib.parse; print(urllib.parse.unquote('$sentence_cp5'))")
 
 
 curl -s -X POST \
@@ -116,7 +115,7 @@ curl -s -X POST \
   -H "Content-Type: application/json; charset=utf-8" \
   -d "{\"q\": [\"$decoded_sentence\"]}" \
   "https://translation.googleapis.com/language/translate/v2/detect?key=${API_KEY}" \
-  -o "$file_CP5"
+  -o "$file_cp5"
 
 
 
