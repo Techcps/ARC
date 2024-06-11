@@ -21,6 +21,8 @@ sudo bash add-monitoring-agent-repo.sh --also-install
 sudo service stackdriver-agent restart
 ```
 
+## TASK 3:
+
 ```
 timeout 120 bash -c -- 'while true; do curl localhost | grep -oP ".*"; sleep .1s;done '
 ```
