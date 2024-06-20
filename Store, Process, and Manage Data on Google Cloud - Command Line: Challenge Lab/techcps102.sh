@@ -130,7 +130,7 @@ EOF_CP
 deploy_function () {
   gcloud functions deploy $FUNCTION_NAME \
   --gen2 \
-  --runtime nodejs16 \
+  --runtime nodejs20 \
   --entry-point thumbnail \
   --source . \
   --region $REGION \
