@@ -1,3 +1,4 @@
+
 # Get the form number from the from input
 read -p "Enter the Form number (1, 2, or 3): " form_number
 
@@ -9,7 +10,7 @@ gsutil mb -p $BUCKET gs://$BUCKET-bucket
 
 gsutil retention set 30s gs://$BUCKET-gcs-bucket
 
-echo "subscibe to quicklab" > sample.txt
+echo "please subscibe to techcps" > sample.txt
 
 gsutil cp sample.txt gs://$BUCKET-bucket-ops/
 }
@@ -26,7 +27,7 @@ gsutil acl ch -u $USER_EMAIL:OWNER gs://$BUCKET-gcs-bucket
 
 gsutil rm gs://$BUCKET-gcs-bucket/sample.txt
 
-echo "subscibe to quicklab" > sample.txt
+echo "please subscibe to techcps" > sample.txt
 
 gsutil cp sample.txt gs://$BUCKET-gcs-bucket
 
