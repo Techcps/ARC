@@ -111,7 +111,7 @@ sleep 45
 
 # Loop until the function deployment succeeds
 while true; do
-    gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs14 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.
+    gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs20 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.
 
     # Check the exit status of the last command
     if [ $? -eq 0 ]; then
