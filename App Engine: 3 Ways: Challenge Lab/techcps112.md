@@ -6,7 +6,7 @@
 ## 🚨 Export the REGION  name correctly
 
 ```
-export REGION=us-east4
+export REGION=
 ```
 
 ```
@@ -33,7 +33,7 @@ git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
 cd python-docs-samples/appengine/standard_python3/hello_world
 ```
 
-# 🚨 Type exit to returm cloud shell
+## 🚨 Type exit to returm cloud shell
 
 ## 🚨 Replace your message
 
