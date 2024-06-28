@@ -10,7 +10,8 @@ gcloud pubsub topics create $TOPIC
 mkdir techcps
 cd techcps
 
-cat > index.js <<'EOF_CP'
+
+cat > index.js <<'EOF'
 /* globals exports, require */
 //jshint strict: false
 //jshint esversion: 6
@@ -24,25 +25,29 @@ const imagemagick = require("imagemagick-stream");
 exports.thumbnail = (event, context) => {
   const fileName = event.name;
   const bucketName = event.bucket;
-  const size = "64x64"
+  const size = "64x64";
   const bucket = gcs.bucket(bucketName);
-  const topicName = "$TOPIC";
+  const topicName = "REPLACE_WITH_YOUR_TOPIC_ID";  // Replace this with your actual topic ID
   const pubsub = new PubSub();
-  if ( fileName.search("64x64_thumbnail") == -1 ){
-    // doesn't have a thumbnail, get the filename extension
-    var filename_split = fileName.split('.');
-    var filename_ext = filename_split[filename_split.length - 1];
-    var filename_without_ext = fileName.substring(0, fileName.length - filename_ext.length );
-    if (filename_ext.toLowerCase() == 'png' || filename_ext.toLowerCase() == 'jpg'){
-      // only support png and jpg at this point
+
+  if (fileName.search("64x64_thumbnail") === -1) {
+    // Doesn't have a thumbnail, get the filename extension
+    const filenameSplit = fileName.split('.');
+    const filenameExt = filenameSplit.pop();
+    const filenameWithoutExt = filenameSplit.join('.');
+
+    if (filenameExt.toLowerCase() === 'png' || filenameExt.toLowerCase() === 'jpg') {
+      // Only support png and jpg at this point
       console.log(`Processing Original: gs://${bucketName}/${fileName}`);
       const gcsObject = bucket.file(fileName);
-      let newFilename = filename_without_ext + size + '_thumbnail.' + filename_ext;
-      let gcsNewObject = bucket.file(newFilename);
-      let srcStream = gcsObject.createReadStream();
-      let dstStream = gcsNewObject.createWriteStream();
-      let resize = imagemagick().resize(size).quality(90);
+      const newFilename = `${filenameWithoutExt}${size}_thumbnail.${filenameExt}`;
+      const gcsNewObject = bucket.file(newFilename);
+      const srcStream = gcsObject.createReadStream();
+      const dstStream = gcsNewObject.createWriteStream();
+      const resize = imagemagick().resize(size).quality(90);
+
       srcStream.pipe(resize).pipe(dstStream);
+
       return new Promise((resolve, reject) => {
         dstStream
           .on("error", (err) => {
@@ -51,33 +56,35 @@ exports.thumbnail = (event, context) => {
           })
           .on("finish", () => {
             console.log(`Success: ${fileName} → ${newFilename}`);
-              // set the content-type
-              gcsNewObject.setMetadata(
-              {
-                contentType: 'image/'+ filename_ext.toLowerCase()
-              }, function(err, apiResponse) {});
-              pubsub
-                .topic(topicName)
-                .publisher()
-                .publish(Buffer.from(newFilename))
-                .then(messageId => {
-                  console.log(`Message ${messageId} published.`);
-                })
-                .catch(err => {
-                  console.error('ERROR:', err);
-                });
+            // Set the content-type
+            gcsNewObject.setMetadata({
+              contentType: 'image/' + filenameExt.toLowerCase()
+            }, (err, apiResponse) => {});
+
+            pubsub
+              .topic(topicName)
+              .publish(Buffer.from(newFilename))
+              .then(messageId => {
+                console.log(`Message ${messageId} published.`);
+                resolve();
+              })
+              .catch(err => {
+                console.error('ERROR:', err);
+                reject(err);
+              });
           });
       });
-    }
-    else {
+    } else {
       console.log(`gs://${bucketName}/${fileName} is not an image I can handle`);
     }
-  }
-  else {
+  } else {
     console.log(`gs://${bucketName}/${fileName} already has a thumbnail`);
   }
 };
-EOF_CP
+EOF
+
+sed -i "s/REPLACE_WITH_YOUR_TOPIC_ID/$TOPIC/" index.js
+
 
 cat > package.json <<'EOF_CP'
 {
@@ -100,6 +107,8 @@ cat > package.json <<'EOF_CP'
   }
 EOF_CP
 
+
+
 export PROJECT_NUMBER=$(gcloud projects describe $DEVSHELL_PROJECT_ID --format="value(projectNumber)")
 SERVICE_ACCOUNT=$(gsutil kms serviceaccount -p $PROJECT_NUMBER)
 
@@ -107,11 +116,13 @@ gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member serviceAcco
 
 sleep 45
 
+
+
 #!/bin/bash
 
 # Loop until the function deployment succeeds
 while true; do
-    gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs20 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.
+    gcloud functions deploy $FUNCTION_NAME --gen2 --runtime nodejs20 --entry-point thumbnail --source . --region $REGION --trigger-http --timeout 600s --max-instances 2 --min-instances 1 --quiet
 
     # Check the exit status of the last command
     if [ $? -eq 0 ]; then
@@ -122,6 +133,10 @@ while true; do
         sleep 17
     fi
 done
+
+# gcloud functions deploy $FUNCTION_NAME --region=$REGION --runtime=nodejs20 --entry-point=thumbnail --trigger-bucket=$BUCKET_NAME --source=.
+
+
 
 curl -LO raw.githubusercontent.com/Techcps/ARC/master/Monitor%20and%20Manage%20Google%20Cloud%20Resources%3A%20Challenge%20Lab/travel.jpg
 
@@ -165,3 +180,4 @@ EOF_CP
 
 
 gcloud alpha monitoring policies create --policy-from-file="app-engine-error-percent-policy.json"
+
