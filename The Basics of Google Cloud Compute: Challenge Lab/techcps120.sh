@@ -7,5 +7,5 @@ gcloud compute disks create mydisk --size=200GB --zone=$ZONE
 gcloud compute instances attach-disk my-instance --disk mydisk --zone=$ZONE
 
 
-gcloud compute ssh my-instance --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command "sudo apt-get update && sudo apt-get install -y nginx && ps auwx | grep nginx
+gcloud compute ssh my-instance --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command "sudo apt-get update && sudo apt-get install -y nginx && ps auwx | grep nginx"
 
