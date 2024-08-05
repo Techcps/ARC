@@ -20,7 +20,6 @@ export SERVICE_NAME=cf-demo
 
 deploy_function() {
 gcloud functions deploy $SERVICE_NAME \
-  --gen2 \
   --runtime=go121 \
   --region=$REGION \
   --source=. \
