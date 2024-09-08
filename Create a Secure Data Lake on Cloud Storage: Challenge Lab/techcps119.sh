@@ -97,6 +97,11 @@ gcloud config set compute/zone $ZONE
 export REGION=${ZONE%-*}
 gcloud config set compute/region $REGION
 
+export KEY_1=domain_type
+
+export VALUE_1=source_data
+
+
 gcloud alpha dataplex lakes create customer-lake --project=$DEVSHELL_PROJECT_ID --display-name="Customer-Lake" --location=$REGION --labels="key_1=$KEY_1,value_1=$VALUE_1"
 
 gcloud dataplex zones create public-zone --project=$DEVSHELL_PROJECT_ID --lake=customer-lake --location=$REGION --type=RAW --resource-location-type=SINGLE_REGION --display-name="Public-Zone"
