@@ -106,18 +106,18 @@ gcloud dataplex assets create customer-raw-data --project=$DEVSHELL_PROJECT_ID -
 gcloud dataplex assets create customer-reference-data --project=$DEVSHELL_PROJECT_ID --location=$REGION --zone=public-zone --resource-type=BIGQUERY_DATASET --lake=customer-lake --resource-name=projects/$DEVSHELL_PROJECT_ID/datasets/customer_reference_data --display-name="Customer Reference Data"
 }
 
+
 # Run the function based on the selected form number
 case $form_number in
     1) 
-        cp_form_1 || cp_form_2 ;;
+        cp_form_1 ;;
     2) 
-        cp_form_2 || cp_form_3 ;;
+        cp_form_2 ;;
     3) 
-        cp_form_3 || cp_form_4 ;;        
-    3) 
+        cp_form_3 ;;
+    4) 
         cp_form_4 ;;
     *) 
-        echo "CP Invalid form number. Please enter 1, 2, 3, or 4." ;;
+        echo "Invalid form number. Please enter 1, 2, 3, or 4." ;;
 esac
-
 
