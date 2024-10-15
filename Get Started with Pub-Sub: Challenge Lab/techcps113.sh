@@ -1,8 +1,15 @@
+
+
 # Get the form number from the from input
 read -p "Enter the Form number (1, 2, or 3): " form_number
 
 # Function to run Form 1
 cp_form_1() {
+    echo "Export the variables name correctly"
+
+    # Set the REGION name correctly
+    read -p "Enter REGION: " REGION
+
     gcloud services enable cloudscheduler.googleapis.com --project=$DEVSHELL_PROJECT_ID
 
     gcloud pubsub topics create cloud-pubsub-topic
@@ -16,6 +23,12 @@ cp_form_1() {
 
 # Function to run Form 2
 cp_form_2() {
+
+    echo "Export the variables name correctly"
+
+    # Set the REGION name correctly
+    read -p "Enter REGION: " REGION
+
     gcloud beta pubsub schemas create city-temp-schema \
         --type=avro \
         --definition='{
@@ -46,15 +59,23 @@ cp_form_2() {
 
 # Function to run Form 3
 cp_form_3() {
-    gcloud pubsub snapshots create pubsub-snapshot --subscription=gcloud-pubsub-subscription
+    echo "Export the variables name correctly"
 
-    gcloud pubsub lite-reservations create pubsub-lite-reservation --location=$REGION --throughput-capacity=2
-
+    # Set the REGION name correctly
+    read -p "Enter REGION: " REGION
+  
     gcloud services enable cloudscheduler.googleapis.com --project=$DEVSHELL_PROJECT_ID
 
-    gcloud pubsub lite-topics create cloud-pubsub-topic-lite --location=$REGION --partitions=1 --per-partition-bytes=30GiB --throughput-reservation=demo-reservation
+    # gcloud pubsub topics create gcloud-pubsub-topic ---pre-created
 
-    gcloud pubsub lite-subscriptions create cloud-pubsub-subscription-lite --location=$REGION --topic=cloud-pubsub-topic-lite
+    gcloud pubsub subscriptions create pubsub-subscription-message --topic=gcloud-pubsub-topic
+
+    gcloud scheduler jobs create pubsub pubsub-subscription-message --schedule="* * * * *" --topic=gcloud-pubsub-topic --message-body="Hello World!" --location=$REGION
+
+    gcloud pubsub subscriptions pull pubsub-subscription-message --limit 5
+
+    gcloud pubsub snapshots create pubsub-snapshot --subscription=pubsub-subscription-message
+
 }
 
 # Run the function based on the selected form number
