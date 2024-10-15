@@ -25,14 +25,16 @@ sudo chmod +x techcps.sh
 
 ---
 
+### 💡 Let's find the Form Number: Press Ctrl + G
+
 ### 🚀 Form id 1
 
 - **Task1: Publish a message to the topic**
 - **Task2: View the message**
 - **Task3: Create a Pub/Sub Snapshot for Pub/Sub topic**
 
+---
 ### Congratulations, you're all done with the lab 😄
-
 ---
 
 ### 🌐 Join our Community
