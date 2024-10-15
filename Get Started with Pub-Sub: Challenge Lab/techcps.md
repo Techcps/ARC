@@ -1,7 +1,7 @@
 
 ## 💡 Lab Link: [Get Started with Pub/Sub: Challenge Lab - ARC113](https://www.cloudskillsboost.google/focuses/105165?parent=catalog)
 
-## 🚀 Lab Solution [Form-1 - Watch here](https://youtu.be/L8-Qig50l1c) & [Form-2 - Watch here](https://youtu.be/VEUy7nXeWmc) & [Form-3 - Watch here](https://youtu.be/gMssL1guhb4)
+## 🚀 Lab Solution [Form-1: Watch here](https://youtu.be/L8-Qig50l1c) & [Form-2: Watch here](https://youtu.be/VEUy7nXeWmc) & [Form-3: Watch here](https://youtu.be/gMssL1guhb4)
 
 ---
 
