@@ -1,7 +1,7 @@
 
 ## 💡 Lab Link: [Get Started with Pub/Sub: Challenge Lab - ARC113](https://www.cloudskillsboost.google/focuses/105165?parent=catalog)
 
-## 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+## 🚀 Lab Solution [Form id 1 - Watch here](https://youtu.be/L8-Qig50l1c) && [Form id 2 - Watch here](https://youtu.be/VEUy7nXeWmc) && [Form id 3 - Watch here](https://youtu.be/gMssL1guhb4)
 
 ---
 
@@ -25,7 +25,7 @@ sudo chmod +x techcps113.sh
 
 --
 
-## 💡 CP Invalid form number. Please enter 1, 2, 3, or 4: 
+## 💡 CP Invalid form number. Please enter 1, 2, or 3: 
 
 ---
 
@@ -33,7 +33,7 @@ sudo chmod +x techcps113.sh
 
 ---
 
-### 🚀 Form id 1
+### 🚀 Form id 1 [Lab Solution - Watch here](https://youtu.be/L8-Qig50l1c)
 
 - **Task 1: Set up Cloud Pub/Sub**
 - **Task 2: Create a Cloud Scheduler job**
@@ -41,7 +41,7 @@ sudo chmod +x techcps113.sh
 
 ---
 
-### 🚀 Form id 2
+### 🚀 Form id 2 [Lab Solution - Watch here](https://youtu.be/VEUy7nXeWmc)
 
 - **Task 1: Create Pub/Sub schema**
 - **Task 2: Create Pub/Sub topic using schema**
@@ -51,7 +51,7 @@ sudo chmod +x techcps113.sh
 
 ---
 
-### 🚀 Form id 3
+### 🚀 Form id 3 [Lab Solution - Watch here](https://youtu.be/gMssL1guhb4)
 
 - **Task1: Publish a message to the topic**
 - **Task2: View the message**
