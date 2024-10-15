@@ -23,7 +23,7 @@ sudo chmod +x techcps113.sh
 
 ## 🚨Export the Region Name correctly
 
---
+---
 
 ## 💡 CP Invalid form number. Please enter 1, 2, or 3: 
 
