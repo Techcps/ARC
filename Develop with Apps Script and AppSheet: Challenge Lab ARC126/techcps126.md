@@ -13,7 +13,7 @@
 
 ---
 
-### 🚀 Now import the downloaded file[Click here](https://docs.google.com/spreadsheets/u/0/?pli=1&tgif=d)
+### 🚀 Open this link [Click here](https://docs.google.com/spreadsheets/u/0/?pli=1&tgif=d)
 
 ### 💡Download the file [Click here](https://github.com/Techcps/ARC/blob/main/Develop%20with%20Apps%20Script%20and%20AppSheet%3A%20Challenge%20Lab%20ARC126/Techcps.xlsx)
 
