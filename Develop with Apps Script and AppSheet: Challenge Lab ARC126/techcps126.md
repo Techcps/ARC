@@ -1,7 +1,7 @@
 
 ## 💡 Lab Link: [Develop with Apps Script and AppSheet: Challenge Lab  - ARC126](https://www.cloudskillsboost.google/focuses/66584?parent=catalog)
 
-## 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+## 🚀 Lab Solution [Watch Here](https://youtu.be/_6r3EbDx9UY)
 
 ---
 
