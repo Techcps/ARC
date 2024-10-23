@@ -26,10 +26,10 @@ file_cp5=""
 ## 🚨
 
 ```
+
 export PROJECT_ID=$(gcloud config get-value project)
 
 source venv/bin/activate
-
 
 cat > synthesize-text.json <<EOF
 
@@ -50,14 +50,13 @@ cat > synthesize-text.json <<EOF
         'audioEncoding':'MP3'
     }
 }
-
 EOF
 
 
 curl -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) \
-  -H "Content-Type: application/json; charset=utf-8" \
-  -d @synthesize-text.json "https://texttospeech.googleapis.com/v1/text:synthesize" \
-  > $file_cp2
+-H "Content-Type: application/json; charset=utf-8" \
+-d @synthesize-text.json "https://texttospeech.googleapis.com/v1/text:synthesize" \
+> "$file_cp2"
 
 
 
@@ -98,48 +97,43 @@ python tts_decode.py --input "$file_cp2" --output "synthesize-text-audio.mp3"
 
 
 
-
-
 audio_uri="gs://cloud-samples-data/speech/corbeau_renard.flac"
 
 
 cat > "$request_cp3" <<EOF
 {
-  "config": {
-    "encoding": "FLAC",
-    "sampleRateHertz": 44100,
-    "languageCode": "fr-FR"
-  },
-  "audio": {
-    "uri": "$audio_uri"
-  }
+"config": {
+"encoding": "FLAC",
+"sampleRateHertz": 44100,
+"languageCode": "fr-FR"
+},
+"audio": {
+"uri": "$audio_uri"
+}
 }
 EOF
 
-
 curl -s -X POST -H "Content-Type: application/json" \
-    --data-binary @"$request_cp3" \
-    "https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" \
-    -o "$response_cp3"
+--data-binary @"$request_cp3" \
+"https://speech.googleapis.com/v1/speech:recognize?key=${API_KEY}" \
+-o "$response_cp3"
 
 
-
-sudo apt-get update
-sudo apt-get install -y jq
-
-curl "https://translation.googleapis.com/language/translate/v2?target=en&key=${API_KEY}&q=${sentence_cp4}" > $file_cp4
-
-curl "https://translation.googleapis.com/language/translate/v2?target=en&key=${API_KEY}&q=${task_4_sentence}" > $task_4_file
-
-decoded_sentence=$(python -c "import urllib.parse; print(urllib.parse.unquote('$sentence_cp5'))")
+response=$(curl -s -X POST \
+-H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+-H "Content-Type: application/json; charset=utf-8" \
+-d "{\"q\": \"$sentence_cp4\"}" \
+"https://translation.googleapis.com/language/translate/v2?key=${API_KEY}&source=ja&target=en")
+echo "$response" > "$file_cp4"
 
 
 curl -s -X POST \
-  -H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
-  -H "Content-Type: application/json; charset=utf-8" \
-  -d "{\"q\": [\"$decoded_sentence\"]}" \
-  "https://translation.googleapis.com/language/translate/v2/detect?key=${API_KEY}" \
-  -o "$file_cp5"
+-H "Authorization: Bearer $(gcloud auth application-default print-access-token)" \
+-H "Content-Type: application/json; charset=utf-8" \
+-d "{\"q\": [\"$sentence_cp5\"]}" \
+"https://translation.googleapis.com/language/translate/v2/detect?key=${API_KEY}" \
+-o "$file_cp5"
+
 ```
 
 ## Congratulations, you're all done with the lab 😄
