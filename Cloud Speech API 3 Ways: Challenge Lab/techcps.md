@@ -12,17 +12,35 @@
 - **DM for credit or removal request (no copyright intended) ©All rights and credits for the original content belong to Google Cloud [Google Cloud Skill Boost website](https://www.cloudskillsboost.google/)** 🙏
 
 ---
+### Click here to open Online Notepad [Click here](https://www.rapidtables.com/tools/notepad.html#)
 
-## 🚨Copy and run the below commands in Cloud Shell:
+### 🚨 Export the below variables name correctly:
+```
+export API_KEY=""
+
+export file_cp2=""
+
+export request_cp3=""
+
+export response_cp3=""
+
+export sentence_cp4=""
+
+export file_cp4=""
+
+export sentence_cp5=""
+
+export file_cp5=""
+```
+
+---
+
+### 🚨Copy and run the below commands in Cloud Shell:
 ```
 curl -LO raw.githubusercontent.com/Techcps/ARC/master/Cloud%20Speech%20API%203%20Ways:%20Challenge%20Lab/techcps.sh
 sudo chmod +x techcps.sh
 ./techcps.sh
 ```
-
-### 🚨 Export the display variables name correctly:
-
----
 
 ### Congratulations, you're all done with the lab 😄
 
