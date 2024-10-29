@@ -41,9 +41,9 @@ gcloud storage buckets update gs://$BUCKET_3 --update-labels=key=value
 cp_form_3() {
 export BUCKET="$(gcloud config get-value project)"		
 
-gsutil mb -c coldline gs://$BUCKET_1
+gsutil mb -c nearline gs://$BUCKET_1
 
-echo "This is an example of editing the file content for cloud storage object" | gsutil cp - gs://$BUCKET_2
+echo "This is an example of editing the file content for cloud storage object" | gsutil cp sample.txt gs://$BUCKET_2
 
 gsutil defstorageclass set ARCHIVE gs://$BUCKET_3
 }
