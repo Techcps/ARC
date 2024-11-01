@@ -1,7 +1,7 @@
 
 ## 💡 Lab Link: [Get Started with Cloud Storage: Challenge Lab - ARC111](https://www.cloudskillsboost.google/focuses/62706?parent=catalog)
 
-## 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+## 🚀 Lab Solution [Watch Here](https://youtu.be/iHMps4M2HcE)
 
 ---
 
