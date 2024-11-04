@@ -69,6 +69,17 @@ sudo chmod +x techcps119.sh
 - **Task 4. Create Entities**
 
 ---
+
+- **Task: Create an entry group**
+```
+# Export the Region name correctly
+read -p "Enter the REGION: " REGION
+
+ENTRY_GROUP_ID="custom_entry_group"
+
+gcloud data-catalog entry-groups create $ENTRY_GROUP_ID --location=$REGION --display-name="Custom entry group" && gcloud data-catalog entry-groups list --location=$REGION
+```
+
 ### Congratulations, you're all done with the lab 😄
 ---
 
