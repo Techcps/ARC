@@ -43,7 +43,12 @@ export BUCKET="$(gcloud config get-value project)"
 
 gsutil mb -c nearline gs://$BUCKET_1
 
-echo "This is an example of editing the file content for cloud storage object" | gsutil cp sample.txt gs://$BUCKET_2
+
+# Create a sample file with content
+echo "This is an example of editing the file content for cloud storage object" > sample.txt
+
+# Upload the file to the specified bucket
+gsutil cp sample.txt gs://$BUCKET_2
 
 gsutil defstorageclass set ARCHIVE gs://$BUCKET_3
 }
