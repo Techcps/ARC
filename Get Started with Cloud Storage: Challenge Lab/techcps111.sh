@@ -32,7 +32,7 @@ echo "please subscibe to techcps" > sample.txt
 
 gsutil cp sample.txt gs://$BUCKET_2
 
-gsutil acl ch -u allUsers:R gs://$BUCKET_2
+gsutil acl ch -u allUsers:R gs://$BUCKET_2/sample.txt
 
 gcloud storage buckets update gs://$BUCKET_3 --update-labels=key=value
 }
