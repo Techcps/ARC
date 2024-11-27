@@ -2,7 +2,7 @@
 
 ### 💡 Lab Link: [Analyze Images with the Cloud Vision API: Challenge Lab - ARC122](https://www.cloudskillsboost.google/focuses/64748?parent=catalog)
 
-### 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+### 🚀 Lab Solution [Watch Here](https://youtu.be/TpdfUHZ9EFw)
 
 ---
 
