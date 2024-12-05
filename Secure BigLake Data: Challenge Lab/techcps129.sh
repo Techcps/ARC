@@ -6,7 +6,7 @@ BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
 echo "Please set the below values correctly"
-read -p "Enter the USER_2: " USER_2
+read -p "${YELLOW}${BOLD}Enter the USER_2: ${RESET}" USER_2
 
 bq mk --dataset online_shop
 
@@ -16,7 +16,7 @@ SERVICE_ACCOUNT=$(bq show --format=json --connection $DEVSHELL_PROJECT_ID.US.use
 
 gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID \
   --member=serviceAccount:$SERVICE_ACCOUNT \
-  --role=roles/storage.objectViewer
+  --role="roles/storage.objectViewer"
 
 bq mkdef \
 --autodetect \
