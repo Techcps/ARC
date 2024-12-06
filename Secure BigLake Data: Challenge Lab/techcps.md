@@ -1,7 +1,7 @@
 
 ### 💡 Lab Link: [Secure BigLake Data: Challenge Lab - ARC129](https://www.cloudskillsboost.google/focuses/64458?parent=catalog)
 
-### 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+### 🚀 Lab Solution [Watch Here](https://youtu.be/9-OLhlUwCUg)
 
 ---
 
