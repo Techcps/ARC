@@ -30,8 +30,6 @@ sudo chmod +x techcps2.sh
 ./techcps2.sh
 ```
 
-### ⚠️ Zone (Use the different zone in same region as subnet-a)
-
 ---
 
 ### Congratulations, you're all done with the lab 😄
