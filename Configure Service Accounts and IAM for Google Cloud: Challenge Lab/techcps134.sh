@@ -15,7 +15,7 @@ export ZONE
 export REGION="${ZONE%-*}"
 
 
-cat > cp.sh <<'EOF_CP'
+cat > techcps.sh <<'EOF_CP'
 
 gcloud auth login --quiet
 
@@ -68,15 +68,15 @@ EOF_CP
 
 export ZONE=$ZONE
 
-gcloud compute scp cp.sh lab-vm:/tmp --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet
+gcloud compute scp techcps.sh lab-vm:/tmp --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet
 
-gcloud compute ssh lab-vm --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command="bash /tmp/cp.sh"
-
-
-sleep 20
+gcloud compute ssh lab-vm --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command="bash /tmp/techcps.sh"
 
 
-cat > cp.sh <<'EOF_CP'
+sleep 45
+
+
+cat > techcps.sh <<'EOF_CP'
 
 sudo apt-get update
 
@@ -124,15 +124,15 @@ client = bigquery.Client(
 print(client.query(query).to_dataframe())
 " > query.py
 
-sleep 10
+sleep 15
 
 python3 query.py
 EOF_CP
 
 export ZONE=$ZONE
 
-gcloud compute scp cp.sh bigquery-instance:/tmp --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet
+gcloud compute scp techcps.sh bigquery-instance:/tmp --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet
 
-gcloud compute ssh bigquery-instance --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command="bash /tmp/cp.sh"
+gcloud compute ssh bigquery-instance --project=$DEVSHELL_PROJECT_ID --zone=$ZONE --quiet --command="bash /tmp/techcps.sh"
 
 
