@@ -2,7 +2,7 @@
 
 ### 💡 Lab Link: [Get Started with Sensitive Data Protection: Challenge Lab - ARC116](https://www.cloudskillsboost.google/focuses/64782?parent=catalog)
 
-### 🚀 Lab Solution [Watch Here](https://www.youtube.com/@techcps)
+### 🚀 Lab Solution [Watch Here](https://youtu.be/b4828bmKvxU)
 
 ---
 
