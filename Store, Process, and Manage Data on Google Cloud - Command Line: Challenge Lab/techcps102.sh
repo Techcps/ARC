@@ -100,6 +100,7 @@ sed -i '16c\  const topicName = "'$TOPIC_ID'";' index.js
 
 
 
+
 cat > package.json <<EOF_CP
 {
   "name": "thumbnails",
@@ -126,35 +127,45 @@ EOF_CP
 
 #!/bin/bash
 
-  
+
+
 deploy_function () {
   gcloud functions deploy $FUNCTION_NAME \
-  --gen2 \
-  --runtime nodejs20 \
-  --entry-point thumbnail \
-  --source . \
-  --region $REGION \
-  --trigger-bucket $BUCKET \
-  --trigger-location $REGION \
-  --max-instances 5 \
-  --allow-unauthenticated --quiet
+    --gen2 \
+    --runtime nodejs20 \
+    --entry-point thumbnail \
+    --source . \
+    --region $REGION \
+    --trigger-bucket $BUCKET \
+    --trigger-location $REGION \
+    --max-instances 5 \
+    --allow-unauthenticated --quiet
 }
-  
+
+SERVICE_NAME="$FUNCTION_NAME"
 deploy_success=false
 
 while [ "$deploy_success" = false ]; do
   if deploy_function; then
-    echo "Function deployed successfully (https://www.youtube.com/@techcps).."
-    deploy_success=true
+    echo "Deployment command submitted. Checking Cloud Run service..."
+    while true; do
+      STATUS=$(gcloud run services describe $SERVICE_NAME --region $REGION --format="value(status.conditions[?type='Ready'].status)" 2>/dev/null)
+      
+      if [[ "$STATUS" == "True" ]]; then
+        echo "Function deployed successfully and Cloud Run service is ready!"
+        deploy_success=true
+        break
+      else
+        sleep 10
+      fi
+    done
   else
-    echo "Retrying, please like & subscribe to techcps (https://www.youtube.com/@techcps).."
+    echo "Deployment failed, retrying in 10s https://www.youtube.com/@techcps"
     sleep 10
   fi
 done
 
 
-
-wget https://storage.googleapis.com/cloud-training/arc102/wildlife.jpg
+wget -q https://storage.googleapis.com/cloud-training/arc102/wildlife.jpg
 
 gsutil cp wildlife.jpg gs://$BUCKET
-
