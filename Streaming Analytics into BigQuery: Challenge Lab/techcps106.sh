@@ -1,3 +1,5 @@
+#ARC106
+
 
 
 export PROJECT_ID=$(gcloud config get-value project)
@@ -14,6 +16,9 @@ gcloud pubsub topics create $TOPIC_NAME
 
 gcloud pubsub subscriptions create $TOPIC_NAME-sub --topic=$TOPIC_NAME
 
+
+
+sleep 15
 
 
 gcloud dataflow flex-template run $JOB_NAME --region $REGION \
@@ -44,7 +49,7 @@ while true; do
         break
     else
         sleep 30
-        echo "The Dataflow job is not running. please wait and subscribe to Techcps (https://www.youtube.com/@techcps)."
+        echo "The Dataflow job is not running. subscribe to Techcps https://www.youtube.com/@techcps."
     fi
 done
 
@@ -64,9 +69,8 @@ while true; do
         break
     else
         sleep 30
-        echo "The Dataflow job is not running. subscribe to Techcps (https://www.youtube.com/@techcps)."
+        echo "The Dataflow job is not running. subscribe to Techcps https://www.youtube.com/@techcps"
     fi
 done
-
 
 
